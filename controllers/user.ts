@@ -32,20 +32,6 @@ export const getUser = async (
   }
 };
 
-export const createUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { password, ...other } = req?.body;
-    const user = await User.create(req?.body);
-    res.status(201).json(user);
-  } catch (error) {
-    next(error);
-  }
-};
-
 export const updateUser = async (
   req: Request,
   res: Response,

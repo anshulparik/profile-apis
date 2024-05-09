@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { dbConnect } from "../db/db";
 import { router as userRouter } from "../routes/user";
+import { router as authRouter } from "../routes/auth";
 import { notFound } from "../middlewares/notFound";
 import { errorHandler } from "../middlewares/errorHandler";
 
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 // routes
+app.use('/auth', authRouter)
 app.use('/user', userRouter)
 
 // middlewares
