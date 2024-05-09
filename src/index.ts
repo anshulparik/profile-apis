@@ -2,6 +2,9 @@ import * as dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import { dbConnect } from "../db/db";
+import { router as userRouter } from "../routes/user";
+import { notFound } from "../middlewares/notFound";
+import { errorHandler } from "../middlewares/errorHandler";
 
 dotenv.config();
 
@@ -11,6 +14,13 @@ const port = process.env.PORT || 4000;
 // middlewares
 app.use(cors());
 app.use(express.json());
+
+// routes
+app.use('/user', userRouter)
+
+// middlewares
+app.use(notFound);
+app.use(errorHandler);
 
 const startServer = async () => {
   try {
