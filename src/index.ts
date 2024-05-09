@@ -1,14 +1,27 @@
-import express, { Express, Request, Response } from 'express';
+import * as dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
+import { dbConnect } from "../db/db";
 
+dotenv.config();
 
-const app: Express = express();
-const port: number = 5000;
+const app = express();
+const port = process.env.PORT || 4000;
 
+// middlewares
+app.use(cors());
+app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-    res.send("Hello World!")
-});
+const startServer = async () => {
+  try {
+    await dbConnect();
+    app.listen(port, async () => {
+      console.log(`Server is runnning on port ${port}!`);
+    });
+  } catch (error) {
+    console.log(error);
+    process?.exit(1);
+  }
+};
 
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`)
-})
+startServer();
